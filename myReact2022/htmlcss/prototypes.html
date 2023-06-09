@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./test.js"></script>
+</head>
+<body>
+    <h1>Prototypes in Javascript</h1>
+
+<script type="text/javascript">
+    let user = {
+    getFullName : function(){
+        return this.name + " " + this.lastname
+    },
+    getAge : function(){
+        let age = new Date().getFullYear() - this.birth;
+        return age
+    }
+}
+
+let student = {
+    name : "Priyank",
+    lastname : "Agarwal",
+    birth : 1995,
+    getAge : user.getAge
+}
+
+console.log(student.getAge());
+
+let teacher = {
+    name : "Pal",
+    lastname : "Sir",
+    birth : 1978
+}
+
+teacher.__proto__=user;
+console.log(teacher.getAge());
+</script>
+</body>
+</html>

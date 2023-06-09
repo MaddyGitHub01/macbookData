@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>REGISTRATION FORM</h2>
+        </div>
+        <form class="form" id="form">
+            <div class="form-control">
+                <label>Username</label>
+                <input type="text" name="" id="username" placeholder="Enter your Name"/>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+
+            <div class="form-control">
+                <label>Email</label>
+                <input type="email" name="" id="email" placeholder="Enter your Email"/>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+
+            <div class="form-control">
+                <label>Phone Number</label>
+                <input type="number" name="" id="phone" placeholder="Enter your Phone Number"/>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+
+            <div class="form-control">
+                <label>Password</label>
+                <input type="password" name="" id="password" placeholder="Enter your Password"/>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+
+            <div class="form-control">
+                <label>Confirm Password</label>
+                <input type="password" name="" id="cpassword" placeholder="Enter your Password Again"/>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error Msg</small>
+            </div>
+
+            <input type="submit" value="submit" class="btn" />
+
+        </form>
+
+    </div>
+</body>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+    const form = document.getElementById('form');
+    const username = document.getElementById('username');
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const password = document.getElementById('password');
+    const cpassword = document.getElementById('cpassword');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        validate();
+    })
+
+    const sendData = (usernameVal, sRate, count) => {
+        console.log(sRate + count);
+        if(sRate === count) {
+            swal("Welcome! " + usernameVal + " Registration Successful", "Success");
+            //location.href= `demo.html?username=${username}`;
+        }
+    }
+
+    const successMsg = (usernameVal) => {
+        let formCon = document.getElementsByClassName('form-control');
+        var count = formCon.length - 1;
+        for(var i=0; i<formCon.length; i++){
+            if(formCon[i].className === "form-control success") {
+                var sRate = 0 + i;
+                sendData(usernameVal, sRate, count);
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+
+    const isEmail = (emailVal) => {
+        var atSymbol = emailVal.indexOf("@");
+        if(atSymbol<1){
+            return false
+        }
+        var dot = emailVal.lastIndexOf(".");
+        if(dot <= atSymbol + 3 ) {
+            return false
+        }
+        if(dot === emailVal.length -1) {
+            return false;
+        }
+        return true
+    }
+
+    const setErrorMsg = (input, errormsgs) => {
+        const formControl = input.parentElement;
+        formControl.className = "form-control error"
+        const small = formControl.querySelector('small');
+        small.innerText = errormsgs;
+    }
+
+    const setSuccessMsg = (input) => {
+        const formControl = input.parentElement;
+        formControl.className = "form-control success"
+    }
+
+
+    function validate() {
+    const usernameVal = username.value.trim();
+    const emailVal = email.value.trim();
+    const phoneVal = phone.value.trim();
+    const passwordVal = password.value.trim();
+    const cpasswordVal = cpassword.value.trim();
+
+    if(usernameVal === ""){
+        setErrorMsg(username, "Username cannot be blank");
+    }
+    else if(usernameVal.length <= 5){
+        setErrorMsg(username, "Username min 6 characters");
+    }
+    else {
+        setSuccessMsg(username);
+    }
+
+    if(emailVal === ""){
+        setErrorMsg(email, "Email cannot be blank");
+    }
+    else if(!isEmail(emailVal)){
+        setErrorMsg(email, "Not a valid Email");
+    }
+    else {
+        setSuccessMsg(email);
+    }
+
+    if(phoneVal === ""){
+        setErrorMsg(phone, "Phone cannot be blank");
+    }
+    else if(phoneVal.length != 10){
+        setErrorMsg(phone, "Not a valid Phone Number");
+    }
+    else {
+        setSuccessMsg(phone);
+    }
+
+    if(passwordVal === ""){
+        setErrorMsg(password, "Password cannot be blank");
+    }
+    else if(passwordVal.length <= 5){
+        setErrorMsg(password, "Minumum 6 character");
+    }
+    else {
+        setSuccessMsg(password);
+    }
+
+    if(cpasswordVal === ""){
+        setErrorMsg(cpassword, "Confirm Password cannot be blank");
+    }
+    else if(passwordVal != cpasswordVal){
+        setErrorMsg(cpassword, "Password donot match");
+    }
+    else {
+        setSuccessMsg(cpassword);
+    }
+
+    successMsg(usernameVal);
+
+    }
+
+
+</script>
+</html>

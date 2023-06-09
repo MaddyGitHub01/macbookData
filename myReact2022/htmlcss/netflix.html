@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .center_div{
+            display: flex;
+            transition: all 1s;
+        }
+        .main_div{
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="main_div">
+        <div class="center_div" id="center_div"></div>
+    </div>
+
+    <script>
+
+        const centerdiv = document.getElementById("center_div");
+
+        fetch("https://jsonplaceholder.typicode.com/photos?_limit=20").then((apidata) => {
+            return apidata.json();
+        }).then((jsondata) => {
+            jsondata.map((val) => {
+                key = val.id;
+                let img = document.createElement("img");
+                img.src = `https://picsum.photos/200/300?random=${val.id}`;
+                centerdiv.appendChild(img);
+            })
+        })
+    </script>
+</body>
+</html>
